@@ -1,0 +1,14 @@
+@mixin text-style($color, $font-size, $line-height, $font-weight) {
+  color: $color;
+  font-family: var(--font-family);
+  font-size: $font-size;
+  font-style: normal;
+  font-weight: $font-weight;
+  line-height: $line-height;
+}
+
+@mixin flex-center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

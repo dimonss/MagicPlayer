@@ -1,0 +1,6 @@
+dist/
+build/
+node_modules/
+libs/
+package-lock.json
+package.json

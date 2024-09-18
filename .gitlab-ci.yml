@@ -1,0 +1,59 @@
+stages:
+  - build
+  - deploy
+
+build_frontend_dev:
+  image: node:20.16-alpine
+  stage: build
+  artifacts:
+    paths:
+      - build/
+  cache:
+    paths:
+      - build/
+  script:
+    - docker build -f DockerfileDev -t magic_player_container .
+  only:
+    - dev
+    - test_branch
+  when: manual
+  tags:
+    - dev
+
+build_frontend_prod:
+  image: node:20.16-alpine
+  stage: build
+  artifacts:
+    paths:
+      - build/
+  cache:
+    paths:
+      - build/
+  script:
+    - docker build -f DockerfileProd -t magic_player_container .
+  only:
+    - master
+  when: manual
+  tags:
+    - new_prod
+
+deploy_to_dev:
+  stage: deploy
+  script:
+    - docker run --rm -v /home/front/magic_player_build:/output/build magic_player_container
+  when: manual
+  only:
+    - dev
+    - test_branch
+  tags:
+    - dev
+
+deploy_to_production:
+  stage: deploy
+  script:
+    - docker run --rm -v /home/front/magic_player_build:/output/build magic_player_container
+  when: manual
+  only:
+    - master
+  tags:
+    - new_prod
