@@ -1,5 +1,6 @@
 import 'pages/mainPage/mainPage.scss';
 import AudioPlayer from './player/Player';
+import AuthModalWindow from 'components/AuthModalWindow/AuthModalWindow';
 
 const MainPage = () => (
   <div className="main">
@@ -7,7 +8,6 @@ const MainPage = () => (
       <header>
         <h1>Magic player</h1>
       </header>
-
       <main>
         <AudioPlayer />
         <section className="audio-player">
@@ -59,7 +59,7 @@ const MainPage = () => (
           <ul id="uploaded-tracks"></ul>
         </section>
       </main>
-
+      <AuthModalWindow />
       <footer>
         <p>Информация о сайте | Контакты | Социальные сети</p>
       </footer>
