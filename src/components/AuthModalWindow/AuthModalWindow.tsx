@@ -1,6 +1,7 @@
 import Swal from 'sweetalert2';
 import withReactContent from 'sweetalert2-react-content';
 import './authModalWindow.scss';
+
 const MySwal = withReactContent(Swal);
 
 const AuthModalWindow = () => {
@@ -8,35 +9,61 @@ const AuthModalWindow = () => {
     MySwal.fire({
       title: 'Авторизация',
       html: `
-        <input type="text" id="login" class="swal2-input" placeholder="Логин">
-        <input type="password" id="password" class="swal2-input" placeholder="Пароль">
-      `,
+      <input type="text" id="login" class="swal2-input" placeholder="Логин">
+      <input type="password" id="password" class="swal2-input" placeholder="Пароль">
+    `,
       showCancelButton: true,
       confirmButtonText: 'Войти',
       cancelButtonText: 'Отмена',
-      preConfirm: () => {
+      preConfirm: async () => {
         const loginElement = Swal.getPopup()?.querySelector(
           '#login',
         ) as HTMLInputElement | null;
         const passwordElement = Swal.getPopup()?.querySelector(
           '#password',
         ) as HTMLInputElement | null;
+
         if (loginElement && passwordElement) {
           const login = loginElement.value;
           const password = passwordElement.value;
+
           if (!login || !password) {
             Swal.showValidationMessage('Введите логин и пароль');
-            return false; // Останавливает выполнение при отсутствии данных
+            return false; // Останавливаем выполнение при отсутствии данных
           }
 
-          // Проверка логина и пароля
-          if (login === 'admin' && password === 'password123') {
-            return true;
+          try {
+            const response = await fetch('/auth', {
+              method: 'GET',
+              headers: {
+                'Content-Type': 'application/json',
+                login,
+                password,
+              },
+            });
+
+            if (!response.ok) {
+              Swal.showValidationMessage('Неверный логин или пароль');
+              return false;
+            }
+
+            const data = await response.json();
+            const token = data.data.token || null;
+
+            if (!token) {
+              Swal.showValidationMessage('Неверный логин или пароль');
+              return false;
+            }
+
+            return true; // Возвращаем успех, если токен получен
+          } catch (error) {
+            Swal.showValidationMessage('Ошибка авторизации');
+            return false; // Возвращаем ошибку при запросе
           }
-          Swal.showValidationMessage('Неверный логин или пароль');
-          return false;
         }
-        return false;
+
+        Swal.showValidationMessage('Введите логин и пароль');
+        return false; // Останавливаем выполнение при отсутствии данных
       },
     }).then((result) => {
       if (result.isConfirmed) {

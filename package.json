@@ -3,6 +3,7 @@
   "name": "magic_player",
   "version": "1.0.0",
   "private": true,
+  "proxy": "http://localhost:4001",
   "scripts": {
     "start": "PORT=3000 react-scripts start",
     "build": "react-scripts build",
