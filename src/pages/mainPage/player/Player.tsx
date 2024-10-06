@@ -1,6 +1,8 @@
 import { useRef, useState, ChangeEvent } from 'react';
 import 'pages/mainPage/player/player.scss';
 import audio1 from '../../../audio/1.mp3';
+import { useAppDispatch, useAppSelector } from 'hooks/reduxHooks';
+import { userSlice } from 'store/slices/userSlice';
 
 const AudioPlayer: React.FC = () => {
   const audioRef = useRef<HTMLAudioElement | null>(null);
@@ -24,16 +26,23 @@ const AudioPlayer: React.FC = () => {
       setGainNode(gain);
     }
   };
+  const loggedIn = useAppSelector((state) => state.user.loggedIn);
+  const dispatch = useAppDispatch();
+  const { tryPlayWithoutAuth } = userSlice.actions;
 
   const togglePlayPause = () => {
-    initializeAudioContext();
-    if (audioRef.current) {
-      if (isPlaying) {
-        audioRef.current.pause();
-      } else {
-        audioRef.current.play();
+    if (loggedIn) {
+      initializeAudioContext();
+      if (audioRef.current) {
+        if (isPlaying) {
+          audioRef.current.pause();
+        } else {
+          audioRef.current.play();
+        }
+        setIsPlaying(!isPlaying);
       }
-      setIsPlaying(!isPlaying);
+    } else {
+      dispatch(tryPlayWithoutAuth(true));
     }
   };
 

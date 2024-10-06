@@ -5,12 +5,14 @@ export type UserReduxI = {
   token: string;
   loggedIn: boolean;
   language: LANGUAGE;
+  tryPlayWithoutAuth: boolean;
 };
 
 const initialState: UserReduxI = {
   token: '',
   loggedIn: false,
   language: LANGUAGE.RU,
+  tryPlayWithoutAuth: false,
 };
 
 export const userSlice = createSlice({
@@ -26,6 +28,9 @@ export const userSlice = createSlice({
     },
     setLanguage(state, action: PayloadAction<LANGUAGE>) {
       state.language = action.payload;
+    },
+    tryPlayWithoutAuth(state, action: PayloadAction<boolean>) {
+      state.tryPlayWithoutAuth = action.payload;
     },
     userSetInitialState: () => initialState,
   },

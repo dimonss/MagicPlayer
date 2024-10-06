@@ -1,11 +1,18 @@
 import Swal from 'sweetalert2';
 import withReactContent from 'sweetalert2-react-content';
 import './authModalWindow.scss';
+import { useAppDispatch, useAppSelector } from 'hooks/reduxHooks';
+import { userSlice } from 'store/slices/userSlice';
+import { useCallback, useEffect } from 'react';
 
 const MySwal = withReactContent(Swal);
 
 const AuthModalWindow = () => {
-  const handleLoginModal = () => {
+  const { auth } = userSlice.actions;
+  const dispatch = useAppDispatch();
+  const { tryPlayWithoutAuth } = userSlice.actions;
+  const handleLoginModal = useCallback(() => {
+    dispatch(tryPlayWithoutAuth(false));
     MySwal.fire({
       title: 'Авторизация',
       html: `
@@ -54,6 +61,7 @@ const AuthModalWindow = () => {
               Swal.showValidationMessage('Неверный логин или пароль');
               return false;
             }
+            dispatch(auth(data.data.token));
 
             return true; // Возвращаем успех, если токен получен
           } catch (error) {
@@ -74,12 +82,18 @@ const AuthModalWindow = () => {
         });
       }
     });
-  };
+  }, [auth, dispatch, tryPlayWithoutAuth]);
+  const localTryPlayWithoutAuth = useAppSelector(
+    (state) => state.user.tryPlayWithoutAuth,
+  );
+  useEffect(() => {
+    if (localTryPlayWithoutAuth) handleLoginModal();
+  }, [handleLoginModal, localTryPlayWithoutAuth]);
 
   return (
     <div className="authModalWindow">
       <button type="button" onClick={handleLoginModal}>
-        Открыть форму авторизации
+        Войти
       </button>
     </div>
   );
