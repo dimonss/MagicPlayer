@@ -3,6 +3,8 @@ import 'pages/mainPage/player/player.scss';
 import audio1 from '../../../audio/1.mp3';
 import { useAppDispatch, useAppSelector } from 'hooks/reduxHooks';
 import { userSlice } from 'store/slices/userSlice';
+import { contentApi } from 'API/contentApi';
+import { API_RESPONSE_STATUS } from 'types/DTOTypes';
 
 const AudioPlayer: React.FC = () => {
   const audioRef = useRef<HTMLAudioElement | null>(null);
@@ -30,16 +32,34 @@ const AudioPlayer: React.FC = () => {
   const dispatch = useAppDispatch();
   const { tryPlayWithoutAuth } = userSlice.actions;
 
-  const togglePlayPause = () => {
+  const togglePlayPause = async () => {
     if (loggedIn) {
-      initializeAudioContext();
-      if (audioRef.current) {
-        if (isPlaying) {
-          audioRef.current.pause();
-        } else {
-          audioRef.current.play();
+      try {
+        console.log('contentApi');
+        const result = await dispatch(
+          contentApi.endpoints.fetchClient.initiate('', {
+            forceRefetch: true,
+          }),
+        ).unwrap();
+        console.log('contentApi1');
+        // Доступ к данным, которые вернул запрос
+        initializeAudioContext();
+        if (audioRef.current) {
+          if (isPlaying) {
+            audioRef.current.pause();
+          } else {
+            audioRef.current.play();
+          }
+          setIsPlaying(!isPlaying);
         }
-        setIsPlaying(!isPlaying);
+        console.log('Client Data:', result.data);
+
+        // Обработка ошибок
+        if (result.status === API_RESPONSE_STATUS.ERROR) {
+          console.log('Error:', result.message);
+        }
+      } catch (err) {
+        console.error('Error occurred during fetch:', err);
       }
     } else {
       dispatch(tryPlayWithoutAuth(true));

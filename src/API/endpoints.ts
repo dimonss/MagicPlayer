@@ -1,1 +1,1 @@
-export const EXAMPLE = 'example';
+export const CLIENT = 'client';
