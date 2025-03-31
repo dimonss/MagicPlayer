@@ -8,9 +8,21 @@ import { useCallback, useEffect } from 'react';
 const MySwal = withReactContent(Swal);
 
 const AuthModalWindow = () => {
-  const { auth } = userSlice.actions;
+  const { auth, logout } = userSlice.actions;
   const dispatch = useAppDispatch();
   const { tryPlayWithoutAuth } = userSlice.actions;
+  const { loggedIn, tryPlayWithoutAuth: localTryPlayWithoutAuth } =
+    useAppSelector((state) => state.user);
+
+  const handleLogout = useCallback(() => {
+    dispatch(logout());
+    Swal.fire({
+      icon: 'success',
+      title: 'Успешно!',
+      text: 'Вы успешно вышли из системы!',
+    });
+  }, [dispatch, logout]);
+
   const handleLoginModal = useCallback(() => {
     dispatch(tryPlayWithoutAuth(false));
     MySwal.fire({
@@ -83,18 +95,22 @@ const AuthModalWindow = () => {
       }
     });
   }, [auth, dispatch, tryPlayWithoutAuth]);
-  const localTryPlayWithoutAuth = useAppSelector(
-    (state) => state.user.tryPlayWithoutAuth,
-  );
+
   useEffect(() => {
     if (localTryPlayWithoutAuth) handleLoginModal();
   }, [handleLoginModal, localTryPlayWithoutAuth]);
 
   return (
     <div className="authModalWindow">
-      <button type="button" onClick={handleLoginModal}>
-        Войти
-      </button>
+      {loggedIn ? (
+        <button type="button" onClick={handleLogout}>
+          Выйти
+        </button>
+      ) : (
+        <button type="button" onClick={handleLoginModal}>
+          Войти
+        </button>
+      )}
     </div>
   );
 };
