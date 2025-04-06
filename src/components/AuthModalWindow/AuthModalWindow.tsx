@@ -4,6 +4,7 @@ import './authModalWindow.scss';
 import { useAppDispatch, useAppSelector } from 'hooks/reduxHooks';
 import { userSlice } from 'store/slices/userSlice';
 import { useCallback, useEffect } from 'react';
+import { TELEGRAM_BOT_URL } from 'constants/globalConstants';
 
 const MySwal = withReactContent(Swal);
 
@@ -30,6 +31,11 @@ const AuthModalWindow = () => {
       html: `
       <input type="text" id="login" class="swal2-input" placeholder="Логин">
       <input type="password" id="password" class="swal2-input" placeholder="Пароль">
+      <div style="margin-top: 10px;">Если нет логина и пароля, перейдите в 
+        <a href="${TELEGRAM_BOT_URL}" target="_blank" rel="noopener noreferrer" class="telegram-link">
+          Telegram бот
+        </a>
+      </div>
     `,
       showCancelButton: true,
       confirmButtonText: 'Войти',
