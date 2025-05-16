@@ -29,20 +29,35 @@ const AuthModalWindow = () => {
     MySwal.fire({
       title: 'Авторизация',
       html: `
-      <input type="text" id="login" class="swal2-input" placeholder="Логин">
-      <input type="password" id="password" class="swal2-input" placeholder="Пароль">
-       <div style="margin-top: 10px;">Если нет логина и пароля, перейдите в 
-          <div style="margin-top: 10px;">
-            <a href="${TELEGRAM_BOT_URL}" target="_blank" rel="noopener noreferrer" class="telegram-link-button">
-              <span class="tg-emoji">✈️</span> Telegram бот
-            </a>
-          </div>
+      <form id="login-form" class="swal2-form">
+        <div class="swal2-input-group">
+          <input type="text" id="login" class="swal2-input" placeholder="Логин" form="login-form" autocomplete="username">
         </div>
+        <div class="swal2-input-group">
+          <input type="password" id="password" class="swal2-input" placeholder="Пароль" form="login-form" autocomplete="current-password">
+        </div>
+      </form>
+      <div style="margin-top: 10px;">Если нет логина и пароля, перейдите в 
+        <div style="margin-top: 10px;">
+          <a href="${TELEGRAM_BOT_URL}" target="_blank" rel="noopener noreferrer" class="telegram-link-button">
+            <span class="tg-emoji">✈️</span> Telegram бот
+          </a>
+        </div>
+      </div>
     `,
       showCancelButton: true,
       confirmButtonText: 'Войти',
       cancelButtonText: 'Отмена',
       allowOutsideClick: () => !Swal.isLoading(),
+      didOpen: () => {
+        const form = Swal.getPopup()?.querySelector('#login-form');
+        if (form) {
+          form.addEventListener('submit', (e) => {
+            e.preventDefault();
+            Swal.clickConfirm();
+          });
+        }
+      },
       preConfirm: async () => {
         const loginElement = Swal.getPopup()?.querySelector(
           '#login',
