@@ -31,15 +31,18 @@ const AuthModalWindow = () => {
       html: `
       <input type="text" id="login" class="swal2-input" placeholder="Логин">
       <input type="password" id="password" class="swal2-input" placeholder="Пароль">
-      <div style="margin-top: 10px;">Если нет логина и пароля, перейдите в 
-        <a href="${TELEGRAM_BOT_URL}" target="_blank" rel="noopener noreferrer" class="telegram-link">
-          Telegram бот
-        </a>
-      </div>
+       <div style="margin-top: 10px;">Если нет логина и пароля, перейдите в 
+          <div style="margin-top: 10px;">
+            <a href="${TELEGRAM_BOT_URL}" target="_blank" rel="noopener noreferrer" class="telegram-link-button">
+              <span class="tg-emoji">✈️</span> Telegram бот
+            </a>
+          </div>
+        </div>
     `,
       showCancelButton: true,
       confirmButtonText: 'Войти',
       cancelButtonText: 'Отмена',
+      allowOutsideClick: () => !Swal.isLoading(),
       preConfirm: async () => {
         const loginElement = Swal.getPopup()?.querySelector(
           '#login',
@@ -87,7 +90,6 @@ const AuthModalWindow = () => {
             return false; // Возвращаем ошибку при запросе
           }
         }
-
         Swal.showValidationMessage('Введите логин и пароль');
         return false; // Останавливаем выполнение при отсутствии данных
       },

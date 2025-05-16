@@ -1,5 +1,175 @@
+@import 'styles/mixins';
+@import 'styles/variables';
+
 .authModalWindow {
   width: 100%;
   display: flex;
   justify-content: center;
+  align-items: center;
+  padding: 20px;
+
+  button {
+    @include button-like;
+    position: relative;
+    overflow: hidden;
+
+    &::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(
+        90deg,
+        transparent,
+        rgba(255, 255, 255, 0.2),
+        transparent
+      );
+      transition: $transition-normal;
+    }
+
+    &:hover {
+      transform: translateY(-2px);
+      box-shadow: $shadow-lg, $shadow-glow;
+
+      &::before {
+        left: 100%;
+      }
+    }
+
+    &:active {
+      transform: translateY(0);
+    }
+  }
+
+  .telegram-link {
+    display: inline-block;
+    padding: 10px 20px;
+    background: $button-secondary;
+    color: $text-primary;
+    text-decoration: none;
+    border-radius: $radius-md;
+    font-weight: 600;
+    transition: all $transition-normal;
+    border: 2px solid transparent;
+    box-shadow: $shadow-md;
+
+    &:hover {
+      background: $button-secondary-hover;
+      border-color: $color-yellow;
+      transform: translateY(-2px);
+      box-shadow: $shadow-lg, $shadow-glow;
+    }
+  }
+}
+
+// SweetAlert2 custom styles
+//override styles
+.swal2-validation-message {
+  background: $bg-tertiary !important;
+  color: $text-error !important;
+  border: 1.5px solid $color-red !important;
+  border-radius: $radius-md !important;
+  box-shadow: $shadow-sm !important;
+  font-size: 1rem !important;
+  font-weight: 500 !important;
+  margin: 1rem 0 0 0 !important;
+  padding: 0.75rem 1.25rem !important;
+  text-align: center !important;
+  transition: all $transition-normal !important;
+}
+.swal2-popup {
+  background: $bg-secondary !important;
+  color: $text-primary !important;
+  border: 2px solid $border-color !important;
+  border-radius: $radius-lg !important;
+  box-shadow: $shadow-lg, $shadow-glow !important;
+  padding: 2rem !important;
+
+  .swal2-title {
+    color: $text-primary !important;
+    font-size: 1.8rem !important;
+    font-weight: 700 !important;
+    margin-bottom: 1.5rem !important;
+  }
+
+  .swal2-input {
+    background: $bg-tertiary !important;
+    color: $text-primary !important;
+    border: 2px solid $border-color !important;
+    border-radius: $radius-md !important;
+    padding: 12px !important;
+    font-size: 1rem !important;
+    transition: all $transition-normal !important;
+    box-shadow: $shadow-sm !important;
+
+    &:focus {
+      border-color: $color-red !important;
+      box-shadow: $shadow-glow !important;
+      transform: translateY(-2px);
+    }
+  }
+
+  .swal2-confirm {
+    background: $button-primary !important;
+    color: $color-black !important;
+    border: none !important;
+    border-radius: $radius-md !important;
+    padding: 12px 24px !important;
+    font-weight: 600 !important;
+    transition: all $transition-normal !important;
+    box-shadow: $shadow-md !important;
+
+    &:hover {
+      transform: translateY(-2px);
+      box-shadow: $shadow-lg, $shadow-glow !important;
+    }
+  }
+
+  .swal2-cancel {
+    background: $button-secondary !important;
+    color: $text-primary !important;
+    border: none !important;
+    border-radius: $radius-md !important;
+    padding: 12px 24px !important;
+    font-weight: 600 !important;
+    transition: all $transition-normal !important;
+    box-shadow: $shadow-md !important;
+
+    &:hover {
+      transform: translateY(-2px);
+      box-shadow: $shadow-lg, $shadow-glow !important;
+    }
+  }
+
+  .swal2-html-container {
+    color: $text-secondary !important;
+    font-size: 1.1rem !important;
+    margin: 1rem 0 !important;
+    a{
+      text-decoration: none;
+      color: $text-secondary;
+    }
+  }
+}
+
+.telegram-link-button {
+  @include button-like;
+  .tg-emoji {
+    font-size: 1.3em;
+    margin-right: 0.2em;
+    transition: transform $transition-fast;
+  }
+
+  &:hover, &:focus {
+    background: $button-primary-hover;
+    color: $color-black !important;
+    box-shadow: $shadow-lg, $shadow-glow;
+    transform: translateY(-2px) scale(1.04);
+
+    .tg-emoji {
+      transform: scale(1.2) rotate(-10deg);
+    }
+  }
 }

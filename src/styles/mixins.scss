@@ -1,0 +1,39 @@
+@mixin text-style($color, $font-size, $line-height, $font-weight) {
+    color: $color;
+    font-family: var(--font-family), serif;
+    font-size: $font-size;
+    font-style: normal;
+    font-weight: $font-weight;
+    line-height: $line-height;
+  }
+  
+  @mixin flex-center {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  @mixin button-like(
+    $bg: $button-primary,
+    $color: $color-black,
+    $padding: 12px 22px,
+    $radius: $radius-md,
+    $shadow: $shadow-md
+  ) {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5em;
+    background: $bg;
+    color: $color !important;
+    font-weight: 700;
+    font-size: 1.08rem;
+    padding: $padding;
+    border-radius: $radius;
+    box-shadow: $shadow;
+    border: none;
+    text-decoration: none;
+    margin-top: 0.5rem;
+    margin-bottom: 0.5rem;
+    transition: background $transition-normal, box-shadow $transition-normal, transform $transition-fast;
+  }
+  

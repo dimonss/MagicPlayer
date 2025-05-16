@@ -1,0 +1,84 @@
+@mixin text-style($color, $font-size, $line-height, $font-weight) {
+  color: $color;
+  font-family: var(--font-family), serif;
+  font-size: $font-size;
+  font-style: normal;
+  font-weight: $font-weight;
+  line-height: $line-height;
+}
+
+@mixin flex-center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+@mixin button-like(
+  $bg: $button-primary,
+  $color: $color-black,
+  $padding: 12px 22px,
+  $radius: $radius-md,
+  $shadow: $shadow-md
+) {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5em;
+  background: $bg;
+  color: $color !important;
+  font-weight: 700;
+  font-size: 1.08rem;
+  padding: $padding;
+  border-radius: $radius;
+  box-shadow: $shadow;
+  border: none;
+  text-decoration: none;
+  margin-top: 0.5rem;
+  margin-bottom: 0.5rem;
+  transition: background $transition-normal, box-shadow $transition-normal, transform $transition-fast;
+}
+
+// Theme colors
+$color-black: #0A0A0A;
+$color-yellow: #FFD700;
+$color-red: #FF3B3B;
+$color-dark-gray: #1A1A1A;
+$color-light-yellow: #FFF8DC;
+$color-gradient-start: #FFD700;
+$color-gradient-end: #FF3B3B;
+
+// Text colors
+$text-primary: $color-yellow;
+$text-secondary: $color-light-yellow;
+$text-error: $color-red;
+
+// Background colors
+$bg-primary: $color-black;
+$bg-secondary: #121212;
+$bg-tertiary: #1E1E1E;
+
+// Button colors
+$button-primary: linear-gradient(135deg, $color-gradient-start, $color-gradient-end);
+$button-primary-hover: linear-gradient(135deg, darken($color-gradient-start, 10%), darken($color-gradient-end, 10%));
+$button-secondary: $color-red;
+$button-secondary-hover: darken($color-red, 10%);
+
+// Border colors
+$border-color: $color-yellow;
+$border-color-hover: $color-red;
+
+// Shadows
+$shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.1);
+$shadow-md: 0 4px 6px rgba(0, 0, 0, 0.1);
+$shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.1);
+$shadow-glow: 0 0 15px rgba(255, 215, 0, 0.3);
+
+// Transitions
+$transition-fast: 0.2s ease;
+$transition-normal: 0.3s ease;
+$transition-slow: 0.5s ease;
+
+// Border radius
+$radius-sm: 4px;
+$radius-md: 8px;
+$radius-lg: 12px;
+$radius-full: 9999px;
