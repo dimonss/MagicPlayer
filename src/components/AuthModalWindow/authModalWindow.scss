@@ -69,28 +69,37 @@
     0 0 0 1px rgba(255, 255, 255, 0.05) inset,
     0 0 40px rgba(102, 126, 234, 0.2) !important;
   padding: 2.5rem !important;
+  width: 32em !important;
   max-width: 90vw !important;
   overflow-x: hidden !important;
+  box-sizing: border-box !important;
   color: #ffffff !important;
   font-family: 'Inter', sans-serif !important;
+
+  * {
+    box-sizing: border-box !important;
+  }
 
   .swal2-title {
     color: #ffffff !important;
     font-size: 2rem !important;
     font-weight: 700 !important;
-    margin-bottom: 1.5rem !important;
+    margin: 0 0 1.5rem 0 !important;
     background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
     -webkit-background-clip: text !important;
     -webkit-text-fill-color: transparent !important;
     background-clip: text !important;
+    width: 100% !important;
+    word-wrap: break-word !important;
   }
 
   .swal2-html-container {
     color: rgba(255, 255, 255, 0.9) !important;
     font-size: 1rem !important;
-    margin: 1.5rem 0 !important;
+    margin: 0 0 1.5rem 0 !important;
     line-height: 1.6 !important;
-    max-width: 100% !important;
+    width: 100% !important;
+    overflow: hidden !important;
     overflow-wrap: break-word !important;
     word-wrap: break-word !important;
 
@@ -107,6 +116,7 @@
 
   .swal2-input-group {
     margin-bottom: 1rem;
+    width: 100% !important;
   }
 
   .swal2-input {
@@ -122,6 +132,7 @@
     transition: all 0.3s ease !important;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1) !important;
     width: 100% !important;
+    margin: 0 !important;
     box-sizing: border-box !important;
 
     &::placeholder {
@@ -142,6 +153,9 @@
   .swal2-actions {
     margin-top: 2rem !important;
     gap: 1rem !important;
+    width: 100% !important;
+    flex-wrap: wrap !important;
+    justify-content: center !important;
   }
 
   .swal2-confirm {
